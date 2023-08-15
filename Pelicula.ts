@@ -83,23 +83,29 @@ export class Pelicula{
 
     private calcularValoracion():string{
         if(this.calificacion >= 0 && this.calificacion <=2){
-            return "Con una calificacion de " + this.calificacion + " la pelicula parece ser muy mala"
+            return "Con una calificacion de " + this.calificacion + 
+                    " la pelicula " + this.nombre + " parece ser muy mala"
         }
         else if(this.calificacion > 2 && this.calificacion <= 5){
-            return "Con una calificacion de " + this.calificacion + " la pelicula parece ser mala"
+            return "Con una calificacion de " + this.calificacion + 
+                    " la pelicula " + this.nombre + " parece ser mala"
         }
         else if(this.calificacion > 5 && this.calificacion <= 7){
-            return "Con una calificacion de " + this.calificacion + " la pelicula parece ser regular"
+            return "Con una calificacion de " + this.calificacion + 
+                    " la pelicula " + this.nombre + " parece ser regular"
         }
         else if(this.calificacion > 7 && this.calificacion <= 8){
-            return "Con una calificacion de " + this.calificacion + " la pelicula parece ser buena"
+            return "Con una calificacion de " + this.calificacion + 
+                    " la pelicula " + this.nombre + " parece ser buena"
         }
         else if(this.calificacion > 8 && this.calificacion <= 10){
-            return "Con una calificacion de " + this.calificacion + " la pelicula parece ser muy buena"
+            return "Con una calificacion de " + this.calificacion + 
+                    " la pelicula " + this.nombre + " parece ser muy buena"
         }
         else{
             return "No tiene asignada una valoracion valida"
         }
+        console.log("------------------------------------")
     }
 
     private esSimilar(pelicula1:Pelicula,pelicula2:Pelicula): boolean {
@@ -137,6 +143,9 @@ export class Pelicula{
     }
 
     //Como los metodos son privados se crea otros metodos para acceder a esos metodos
+    accederEsEpica():boolean{
+        return this.esPeliculaEpica()
+    }
     accederCalcularValoracion():string{
         return this.calcularValoracion()
     }
