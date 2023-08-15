@@ -1,0 +1,147 @@
+import { Genero } from "./Genero"
+
+export class Pelicula{
+
+    private nombre : string
+    private director: string
+    private duracion : number
+    private anio : number
+    private calificacion : number
+    private generoPelicula : Array<Genero>
+
+    constructor( nombre:string, director:string, duracion:number, anio:number, calificacion: number, generoPelicula:Array<Genero> ){
+        this.nombre = nombre
+        this.director = director
+        this.duracion = duracion
+        this.anio = anio
+        this.calificacion = calificacion
+        this.generoPelicula = generoPelicula
+    }
+
+    public getNombre() : string {
+        return this.nombre
+    }
+    public getDirector() : string {
+        return this.director
+    }
+    public getDuracion() : number {
+        return this.duracion
+    }
+    public getAnio() : number {
+        return this.anio
+    }
+    public getCalificacion() : number {
+        return this.calificacion
+    }
+    public getTipoPelicula() : Array<Genero> {
+        return this.generoPelicula
+    }
+
+    private setNombre(nombre:string){
+        this.nombre = nombre
+    }
+    private setDirector(director:string){
+        this.director = director
+    }
+    private setDuracion(duracion:number){
+        this.duracion = duracion
+    }
+    private setAnio(anio:number){
+        this.anio = anio
+    }
+    private setCalificacion(calificacion:number){
+        this.calificacion = calificacion
+    }
+
+    //METODOS
+
+    public imprimir(){
+        let genero : string = ""
+        for (let i = 0; i < this.generoPelicula.length; i++){
+            genero = genero + this.generoPelicula[i].getNombre() + ", "
+        }
+
+        console.log("Descripcion de la pelicula: \n" +
+                    "Nombre: " + this.nombre + "\n" +
+                    "Director: " + this.director + "\n" +
+                    "Duracion: " + this.duracion + "\n" +
+                    "Genero: " + genero + "\n" +
+                    "Anio de publicacion: " + this.anio + "\n" +
+                    "Calificacion: " + this.calificacion + "\n" + 
+                    "------------------------------------"
+        )
+    }
+    //Devolver un valor verdadero si es mayor a tres horas = 180 minutos
+    private esPeliculaEpica():boolean{
+        if (this.duracion >= 180){
+            return true
+        }
+        else{
+            return false
+        }
+    }
+
+    private calcularValoracion():string{
+        if(this.calificacion >= 0 && this.calificacion <=2){
+            return "Con una calificacion de " + this.calificacion + " la pelicula parece ser muy mala"
+        }
+        else if(this.calificacion > 2 && this.calificacion <= 5){
+            return "Con una calificacion de " + this.calificacion + " la pelicula parece ser mala"
+        }
+        else if(this.calificacion > 5 && this.calificacion <= 7){
+            return "Con una calificacion de " + this.calificacion + " la pelicula parece ser regular"
+        }
+        else if(this.calificacion > 7 && this.calificacion <= 8){
+            return "Con una calificacion de " + this.calificacion + " la pelicula parece ser buena"
+        }
+        else if(this.calificacion > 8 && this.calificacion <= 10){
+            return "Con una calificacion de " + this.calificacion + " la pelicula parece ser muy buena"
+        }
+        else{
+            return "No tiene asignada una valoracion valida"
+        }
+    }
+
+    private esSimilar(pelicula1:Pelicula,pelicula2:Pelicula): boolean {
+        let similar = false
+        if (pelicula1.getCalificacion() == pelicula2.getCalificacion()){
+            if (this.comparandoGeneros(pelicula1,pelicula2) == true){
+                similar = true
+            }
+            else{
+                similar = false
+            }
+        }
+        else{
+            similar = false
+        
+        }
+        return similar
+    }
+    
+    comparandoGeneros(pelicula1:Pelicula, pelicula2:Pelicula): boolean {
+        let comparar = false
+        for (let i = 0; i < pelicula1.getTipoPelicula().length; i++) {
+            for (let j = 0 ; j < pelicula2.getTipoPelicula().length; j++){
+                if (pelicula1.getTipoPelicula()[i].getNombre() == pelicula2.getTipoPelicula()[j].getNombre()){
+                    comparar = true
+                    break
+                }
+                else{
+                    comparar = false
+                }
+            }
+
+        }
+        return comparar
+    }
+
+    //Como los metodos son privados se crea otros metodos para acceder a esos metodos
+    accederCalcularValoracion():string{
+        return this.calcularValoracion()
+    }
+    accederEsSimilar(pelicula1:Pelicula,pelicula2:Pelicula):boolean{
+        return this.esSimilar(pelicula1,pelicula2)
+    }
+
+}
