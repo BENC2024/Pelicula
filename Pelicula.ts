@@ -33,7 +33,7 @@ export class Pelicula{
     public getCalificacion() : number {
         return this.calificacion
     }
-    public getTipoPelicula() : Array<Genero> {
+    public getGeneroPelicula() : Array<Genero> {
         return this.generoPelicula
     }
 
@@ -52,6 +52,9 @@ export class Pelicula{
     private setCalificacion(calificacion:number){
         this.calificacion = calificacion
     }
+    private setGeneroPelicula(generoPelicula:Array<Genero>){
+        this.generoPelicula = generoPelicula
+    }
 
     //METODOS
 
@@ -60,7 +63,6 @@ export class Pelicula{
         for (let i = 0; i < this.generoPelicula.length; i++){
             genero = genero + this.generoPelicula[i].getNombre() + ", "
         }
-
         console.log("Descripcion de la pelicula: \n" +
                     "Nombre: " + this.nombre + "\n" +
                     "Director: " + this.director + "\n" +
@@ -108,10 +110,10 @@ export class Pelicula{
         console.log("------------------------------------")
     }
 
-    private esSimilar(pelicula1:Pelicula,pelicula2:Pelicula): boolean {
+    private esSimilar(pelicula:Pelicula): boolean {
         let similar = false
-        if (pelicula1.getCalificacion() == pelicula2.getCalificacion()){
-            if (this.comparandoGeneros(pelicula1,pelicula2) == true){
+        if (pelicula.getCalificacion() == this.getCalificacion()){
+            if (this.comparandoGeneros(pelicula) == true){
                 similar = true
             }
             else{
@@ -120,16 +122,15 @@ export class Pelicula{
         }
         else{
             similar = false
-        
         }
         return similar
     }
     
-    comparandoGeneros(pelicula1:Pelicula, pelicula2:Pelicula): boolean {
+    comparandoGeneros(pelicula:Pelicula): boolean {
         let comparar = false
-        for (let i = 0; i < pelicula1.getTipoPelicula().length; i++) {
-            for (let j = 0 ; j < pelicula2.getTipoPelicula().length; j++){
-                if (pelicula1.getTipoPelicula()[i].getNombre() == pelicula2.getTipoPelicula()[j].getNombre()){
+        for (let i = 0; i < pelicula.getGeneroPelicula().length; i++) {
+            for (let j = 0 ; j < this.getGeneroPelicula().length; j++){
+                if (pelicula.getGeneroPelicula()[i].getNombre() == this.getGeneroPelicula()[j].getNombre()){
                     comparar = true
                     break
                 }
@@ -149,8 +150,8 @@ export class Pelicula{
     accederCalcularValoracion():string{
         return this.calcularValoracion()
     }
-    accederEsSimilar(pelicula1:Pelicula,pelicula2:Pelicula):boolean{
-        return this.esSimilar(pelicula1,pelicula2)
+    accederEsSimilar(pelicula:Pelicula):boolean{
+        return this.esSimilar(pelicula)
     }
 
 }
