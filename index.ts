@@ -1,17 +1,7 @@
 import { Genero } from "./Genero";
 import { Pelicula } from "./Pelicula";
 
-function similares(pelicula1:Pelicula,pelicula2:Pelicula){
-    if (pelicula1.accederEsSimilar(pelicula2) == true){
-        console.log("La pelicula " + pelicula1.getNombre() + 
-                    " y la pelicula " + pelicula2.getNombre() + " son similares")
-    }
-    else{
-        console.log("La pelicula " + pelicula1.getNombre() + 
-                    " y la pelicula " + pelicula2.getNombre() + " no son similares")
-    }
-}
-
+//Funcionalidades extra
 function epica(pelicula:Pelicula){
     if (pelicula.accederEsEpica() == true){
         console.log("La pelicula "+pelicula.getNombre()+" es del tipo epica")
@@ -21,7 +11,25 @@ function epica(pelicula:Pelicula){
     }
 }
 
-const diccionarioGen : { [id:number] : Genero } = {
+function similares(pelicula1:Pelicula,pelicula2:Pelicula){
+    if (pelicula1.accederEsSimilar(pelicula2) == true){
+        console.log("La pelicula " + pelicula1.getNombre() + 
+                    " y la pelicula " + pelicula2.getNombre() + " son similares")
+    }
+}
+
+//conocer las peliculas disponibles
+function mostrarCarteleraDisponible(listaPeliculas:Array<Pelicula>){
+    console.log("Peliculas disponibles: ")
+    for(let i = 0; i < listaPeliculas.length; i++){
+        if(listaPeliculas[i].getDisponible()){
+            console.log(listaPeliculas[i].getNombre())
+        }
+    }
+}
+
+//Biblioteca con diferentes generos de peliculas
+const dicGenero : { [id:number] : Genero } = {
     1 : new Genero(1, "Aventura"),
     2 : new Genero(2, "Catástrofe"),
     3 : new Genero(3, "Comedia"),
@@ -35,8 +43,11 @@ const diccionarioGen : { [id:number] : Genero } = {
 }
 
 //Creacion de las peliculas
-let pelicula1 = new Pelicula("Oppenheimer","Christofer Nolan", 180, 2023, 6,[diccionarioGen[1],diccionarioGen[2],diccionarioGen[3]])
-let pelicula2 = new Pelicula("Flash","Andrés Muschietti", 144, 2023, 6, [diccionarioGen[1],diccionarioGen[10]])
+let pelicula1 = new Pelicula("Oppenheimer","Christofer Nolan",180,2023,6,[dicGenero[1],dicGenero[2],dicGenero[3]])
+let pelicula2 = new Pelicula("Flash","Andrés Muschietti",144,2023,6,[dicGenero[1],dicGenero[10]])
+
+let listaPeliculas : Array<Pelicula> = []
+listaPeliculas.push(pelicula1,pelicula2)
 
 //Imprimiendo datos de peliculas
 pelicula1.imprimir()
@@ -54,7 +65,12 @@ console.log("------------------------------------")
 
 //Saber si las peliculas son similares
 similares(pelicula1,pelicula2)
+console.log("------------------------------------")
 
 // Agregar funcionalidad alquilarpelicula () donde se puede saber si esta disponible o no
+pelicula1.alquilarPelicula(true)
+pelicula2.alquilarPelicula(false)
+console.log("------------------------------------")
 
 // Agregar funcionalidad mostrarCarteleraDisponible () donde se puede ver las peliculas que no estan alquiladas
+mostrarCarteleraDisponible(listaPeliculas)

@@ -9,7 +9,10 @@ export class Pelicula{
     private calificacion : number
     private generoPelicula : Array<Genero>
 
-    constructor( nombre:string, director:string, duracion:number, anio:number, calificacion: number, generoPelicula:Array<Genero> ){
+    private disponible : boolean = true
+
+    constructor( nombre:string, director:string, duracion:number, anio:number, 
+                    calificacion: number, generoPelicula:Array<Genero> ){
         this.nombre = nombre
         this.director = director
         this.duracion = duracion
@@ -36,6 +39,9 @@ export class Pelicula{
     public getGeneroPelicula() : Array<Genero> {
         return this.generoPelicula
     }
+    public getDisponible() : boolean{
+        return this.disponible
+    }
 
     private setNombre(nombre:string){
         this.nombre = nombre
@@ -55,9 +61,11 @@ export class Pelicula{
     private setGeneroPelicula(generoPelicula:Array<Genero>){
         this.generoPelicula = generoPelicula
     }
+    private setDisponible(disponible:boolean){
+        this.disponible = disponible
+    }
 
     //METODOS
-
     public imprimir(){
         let genero : string = ""
         for (let i = 0; i < this.generoPelicula.length; i++){
@@ -102,7 +110,7 @@ export class Pelicula{
         }
         else if(this.calificacion > 8 && this.calificacion <= 10){
             return "Con una calificacion de " + this.calificacion + 
-                    " la pelicula " + this.nombre + " parece ser muy buena"
+                    " la pelicula " + this.nombre + " parece ser excelente"
         }
         else{
             return "No tiene asignada una valoracion valida"
@@ -125,12 +133,23 @@ export class Pelicula{
         }
         return similar
     }
+
+    public alquilarPelicula(alquilar:boolean) { //Para saber si se encuentra disponible o no
+        if (alquilar == true){
+            console.log("La pelicula "+this.nombre+" no se encuentra disponible")
+            this.disponible = false
+        }
+        else{
+            this.disponible = true
+        }
+    }
+    //Funcionalidades extra
     
     comparandoGeneros(pelicula:Pelicula): boolean {
         let comparar = false
         for (let i = 0; i < pelicula.getGeneroPelicula().length; i++) {
             for (let j = 0 ; j < this.getGeneroPelicula().length; j++){
-                if (pelicula.getGeneroPelicula()[i].getNombre() == this.getGeneroPelicula()[j].getNombre()){
+                if (this.getGeneroPelicula()[j].getNombre().localeCompare(pelicula.getGeneroPelicula()[i].getNombre())){
                     comparar = true
                     break
                 }
@@ -138,7 +157,6 @@ export class Pelicula{
                     comparar = false
                 }
             }
-
         }
         return comparar
     }
